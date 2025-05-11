@@ -5,6 +5,8 @@
  * @date 2025-05-11 20:38:14
  */
 #pragma once
+#include <google/protobuf/descriptor.h>
+
 #include <memory>
 #include <string>
 
@@ -15,12 +17,17 @@
 namespace kfpanda {
 class KfpandaClient {
  public:
-  explicit KfpandaClient(const std::string &server) : server_(server) {}
+  KfpandaClient(const std::string &service, const std::string &server) : service_(service), server_(server) {}
+
   absl::Status Init();
   kfpanda::KfPandaService_Stub *Stub() const;
-  bool HasError() const { return has_error_; }
+  absl::Status Record(google::protobuf::MethodDescriptor *method, google::protobuf::Message *msg,
+                      kfpanda::RecordType record_type = kfpanda::RECORD_TYPE_GRPC);
+
+  inline bool HasError() const { return has_error_; }
 
  private:
+  std::string service_;
   std::string server_;
   brpc::Channel channel_;
   std::shared_ptr<kfpanda::KfPandaService_Stub> stub_;
