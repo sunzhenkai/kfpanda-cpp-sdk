@@ -11,10 +11,10 @@ if(BUILD_TESTING)
 endif()
 
 # 3rd packages
-find_package(spdlog CONFIG REQUIRED)
-find_package(RapidJSON CONFIG REQUIRED)
+find_package(fmt CONFIG REQUIRED)
+find_package(unofficial-brpc CONFIG REQUIRED)
 
-set(THIRD_LIBRARIES spdlog::spdlog rapidjson)
+set(THIRD_LIBRARIES fmt::fmt unofficial::brpc::brpc-static)
 
 include_directories(.)
 file(GLOB_RECURSE LIB_HREADERS kfpanda/*.h)
