@@ -23,6 +23,7 @@ class KfpandaClient {
   kfpanda::KfPandaService_Stub *Stub() const;
   absl::Status Record(google::protobuf::MethodDescriptor *method, google::protobuf::Message *msg,
                       kfpanda::RecordType record_type = kfpanda::RECORD_TYPE_GRPC);
+  absl::Status Sample(std::vector<std::string> &result, int count = 1, const std::string service = "");
 
   inline bool HasError() const { return has_error_; }
 

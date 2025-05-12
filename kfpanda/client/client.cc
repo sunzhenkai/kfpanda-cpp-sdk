@@ -2,8 +2,10 @@
 
 #include <absl/status/status.h>
 #include <brpc/controller.h>
+#include <protos/service/kfpanda/kfpanda.pb.h>
 
 #include <memory>
+#include <string>
 
 #include "fmt/format.h"
 
@@ -47,4 +49,21 @@ absl::Status KfpandaClient::Record(google::protobuf::MethodDescriptor *method, g
     return absl::OkStatus();
   }
 }
+
+absl::Status KfpandaClient::Sample(std::vector<std::string> &result, int count, const std::string service) {
+  brpc::Controller cntl;
+  kfpanda::SampleRequest request;
+  kfpanda::SampleResponse response;
+  stub_->Sample(&cntl, &request, &response, nullptr);
+  if (cntl.Failed()) {
+    return absl::ErrnoToStatus(cntl.ErrorCode(), cntl.ErrorText());
+  } else {
+    for (auto &data : response.data()) {
+      result.emplace_back(data);
+    }
+    return absl::OkStatus();
+  }
+  return absl::OkStatus();
+}
+
 }  // namespace kfpanda
