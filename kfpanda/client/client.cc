@@ -53,6 +53,8 @@ absl::Status KfpandaClient::Record(google::protobuf::MethodDescriptor *method, g
 absl::Status KfpandaClient::Sample(std::vector<std::string> &result, int count, const std::string service) {
   brpc::Controller cntl;
   kfpanda::SampleRequest request;
+  request.set_service(service.empty() ? service_ : service);
+  request.set_count(count);
   kfpanda::SampleResponse response;
   stub_->Sample(&cntl, &request, &response, nullptr);
   if (cntl.Failed()) {
