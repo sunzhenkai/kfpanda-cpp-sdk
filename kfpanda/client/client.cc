@@ -59,13 +59,14 @@ absl::Status KfpandaClient::Sample(std::vector<std::string> &result, int count, 
   stub_->Sample(&cntl, &request, &response, nullptr);
   if (cntl.Failed()) {
     return absl::ErrnoToStatus(cntl.ErrorCode(), cntl.ErrorText());
-  } else {
+  } else if (response.code() == 0) {
     for (auto &data : response.data()) {
       result.emplace_back(data);
     }
     return absl::OkStatus();
+  } else {
+    return absl::ErrnoToStatus(response.code(), response.message());
   }
-  return absl::OkStatus();
 }
 
 }  // namespace kfpanda
