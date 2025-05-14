@@ -13,8 +13,10 @@ endif()
 # 3rd packages
 find_package(fmt CONFIG REQUIRED)
 find_package(unofficial-brpc CONFIG REQUIRED)
+find_package(kung-fu-panda-protocols CONFIG REQUIRED)
 
-set(THIRD_LIBRARIES fmt::fmt unofficial::brpc::brpc-static)
+set(THIRD_LIBRARIES fmt::fmt unofficial::brpc::brpc-static
+                    kung-fu-panda-protocols::kung-fu-panda-protocols)
 
 include_directories(.)
 file(GLOB_RECURSE LIB_HREADERS kfpanda/*.h)
