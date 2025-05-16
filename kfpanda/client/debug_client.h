@@ -36,7 +36,7 @@ inline absl::Status KfPandaDebugClient::Init() {
   options.max_retry = 0;
   if (channel_.Init(server_.c_str(), "", &options) != 0) {
     has_error_ = true;
-    return absl::ErrnoToStatus(400, "absl::string_view message");
+    return absl::ErrnoToStatus(400, "cannot connect to server");
   }
   stub_ = std::make_shared<kfpanda::KfPandaDebugService_Stub>(&channel_);
   return absl::OkStatus();
