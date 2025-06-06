@@ -26,6 +26,7 @@ class KfpandaClient {
   absl::Status Sample(std::vector<std::string> &result, int count = 1, const std::string service = "");
 
   inline bool HasError() const { return has_error_; }
+  inline brpc::Channel *Channel() { return &channel_; }
 
  private:
   std::string service_;
