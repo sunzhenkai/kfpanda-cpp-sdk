@@ -21,9 +21,9 @@ class KfpandaClient {
 
   absl::Status Init();
   kfpanda::KfPandaService_Stub *Stub() const;
-  absl::Status Record(google::protobuf::MethodDescriptor *method, google::protobuf::Message *msg,
+  absl::Status Record(const google::protobuf::MethodDescriptor *method, const google::protobuf::Message *msg,
                       kfpanda::RecordType record_type = kfpanda::RECORD_TYPE_GRPC);
-  absl::Status Sample(std::vector<std::string> &result, int count = 1, const std::string service = "");
+  absl::Status Sample(std::vector<std::string> &result, int count = 1, const std::string &service = "");
 
   inline bool HasError() const { return has_error_; }
   inline brpc::Channel *Channel() { return &channel_; }

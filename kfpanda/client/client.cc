@@ -26,8 +26,8 @@ absl::Status KfpandaClient::Init() {
   return absl::OkStatus();
 }
 
-absl::Status KfpandaClient::Record(google::protobuf::MethodDescriptor *method, google::protobuf::Message *msg,
-                                   kfpanda::RecordType record_type) {
+absl::Status KfpandaClient::Record(const google::protobuf::MethodDescriptor *method,
+                                   const google::protobuf::Message *msg, kfpanda::RecordType record_type) {
   if (method == nullptr || msg == nullptr) {
     return absl::ErrnoToStatus(400, "[KfpandaClient::Record] method or msg is nullptr");
   }
@@ -51,7 +51,7 @@ absl::Status KfpandaClient::Record(google::protobuf::MethodDescriptor *method, g
   }
 }
 
-absl::Status KfpandaClient::Sample(std::vector<std::string> &result, int count, const std::string service) {
+absl::Status KfpandaClient::Sample(std::vector<std::string> &result, int count, const std::string &service) {
   brpc::Controller cntl;
   kfpanda::SampleRequest request;
   request.set_service(service.empty() ? service_ : service);
