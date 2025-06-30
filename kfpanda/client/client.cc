@@ -37,7 +37,7 @@ absl::Status KfpandaClient::Record(const google::protobuf::MethodDescriptor *met
   auto pt = fmt::format("/{}/{}", method->service()->full_name(), method->name());
   kfpanda::RecordRequest n_req;
   kfpanda::RecordResponse n_resp;
-  n_req.set_service(service_);
+  n_req.set_service(fmt::format("{}.{}", service_, method->name()));
   n_req.set_type(record_type);
   n_req.mutable_uri()->set_path(pt);
   msg->SerializeToString(n_req.mutable_data());
